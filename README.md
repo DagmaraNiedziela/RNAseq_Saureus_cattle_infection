@@ -1,0 +1,2 @@
+# RNAseq_code
+All code associated with my RNAseq analysis of two groups of cattle infected with different strains of Staphylococcus aureus. There is 7 cows in each group and transcriptomics data was analysed at 0, 24, 48, 71 and 168 hours post infection. The library preparation (polyA selected mRNA stranded libraries) and sequencing (paired end, sequencing depth 60M reads) was done by Macrogen. I used FastQC for transcriptome control, and STAR for alignment to Bos taurus genome. 
