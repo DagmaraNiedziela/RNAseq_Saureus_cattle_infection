@@ -11,14 +11,15 @@ library(tidyverse)
 detach(package:pathview) # pathview and dplyr have conflicting select functions, so I sometimes have to detach one or the other to progress with the code 
 detach(package:dplyr)
 
-head(res23_24h_LF_sigDF)
+head(res23_168h_LF_sigDF)
 nrow(res23_24h_LF_sig) 
 colnames(res23_24h_LF_sig) 
 
-logs_23_24h <- res23_24h_LF_sig %>% select(log2FoldChange) 
-logs_23_48h <- res23_48h_LF_sig %>% select(log2FoldChange) 
-logs_23_72h <- res23_72h_LF_sig %>% select(log2FoldChange) 
-logs_23_168h <- res23_168h_LF_sig %>% select(log2FoldChange) 
+logs_23_24h <- res23_24h_LF_sigDF %>% select(log2FoldChange) 
+head(logs_23_48h)
+logs_23_48h <- res23_48h_LF_sigDF %>% select(log2FoldChange) 
+logs_23_72h <- res23_72h_LF_sigDF %>% select(log2FoldChange) 
+logs_23_168h <- res23_168h_LF_sigDF %>% select(log2FoldChange) 
 
 # Convert row names to a new column called name? 
 head(logs_23_48h)
@@ -71,12 +72,12 @@ rownames(logs_MOK023) <- logs_MOK023$rowname
 logs_MOK023 <- logs_MOK023[,-1] 
 
 # Logs files for MOK124 #####
-head(res124_24h_LF_sig)
+head(res124_24h_LF_sigDF)
 
-logs_124_24h <- res124_24h_LF_sig %>% select(log2FoldChange) 
-logs_124_48h <- res124_48h_LF_sig %>% select(log2FoldChange) 
-logs_124_72h <- res124_72h_LF_sig %>% select(log2FoldChange) 
-logs_124_168h <- res124_168h_LF_sig %>% select(log2FoldChange) 
+logs_124_24h <- res124_24h_LF_sigDF %>% select(log2FoldChange) 
+logs_124_48h <- res124_48h_LF_sigDF %>% select(log2FoldChange) 
+logs_124_72h <- res124_72h_LF_sigDF %>% select(log2FoldChange) 
+logs_124_168h <- res124_168h_LF_sigDF %>% select(log2FoldChange) 
 
 # Convert row names to a new column called name? no need 
 head(logs_124_48h)
@@ -101,16 +102,16 @@ logs_MOK124 <- logs_MOK124[,-1]
 # Make files for pathview - put rownames back, I decided to select them out of joined files 
 
 colnames(logs_MOK023)
-logs_23_24h_rows <- logs_MOK023 %>% select(log_24h) 
-logs_23_48h_rows <- logs_MOK023 %>% select(log_48h)
-logs_23_72h_rows <- logs_MOK023 %>% select(log_72h) 
-logs_23_168h_rows <- logs_MOK023 %>% select(log_168h) 
+logs_23_24h_rows <- logs_MOK023 %>% select(log2FoldChange_24h) 
+logs_23_48h_rows <- logs_MOK023 %>% select(log2FoldChange_48h)
+logs_23_72h_rows <- logs_MOK023 %>% select(log2FoldChange_72h) 
+logs_23_168h_rows <- logs_MOK023 %>% select(log2FoldChange_168h) 
 head(logs_23_24h_rows) 
 
-logs_124_24h_rows <- logs_MOK124 %>% select(log_24h) 
-logs_124_48h_rows <- logs_MOK124 %>% select(log_48h)  
-logs_124_72h_rows <- logs_MOK124 %>% select(log_72h) 
-logs_124_168h_rows <- logs_MOK124 %>% select(log_168h) 
+logs_124_24h_rows <- logs_MOK124 %>% select(log2FoldChange_24h) 
+logs_124_48h_rows <- logs_MOK124 %>% select(log2FoldChange_48h)  
+logs_124_72h_rows <- logs_MOK124 %>% select(log2FoldChange_72h) 
+logs_124_168h_rows <- logs_MOK124 %>% select(log2FoldChange_168h) 
 head(logs_124_168h_rows)
 
 
@@ -151,19 +152,20 @@ rownames(logs_MOK124_human) <- logs_MOK124_human$Human.gene.stable.ID
 logs_MOK124_human <- logs_MOK124_human[,-1] 
 
 colnames(logs_MOK023_human)
-logs_23_24h_rows_human <- logs_MOK023_human %>% select(log_24h) 
-logs_23_48h_rows_human <- logs_MOK023_human %>% select(log_48h)
-logs_23_72h_rows_human <- logs_MOK023_human %>% select(log_72h) 
-logs_23_168h_rows_human <- logs_MOK023_human %>% select(log_168h) 
+logs_23_24h_rows_human <- logs_MOK023_human %>% select(log2FoldChange_24h) 
+logs_23_48h_rows_human <- logs_MOK023_human %>% select(log2FoldChange_48h)
+logs_23_72h_rows_human <- logs_MOK023_human %>% select(log2FoldChange_72h) 
+logs_23_168h_rows_human <- logs_MOK023_human %>% select(log2FoldChange_168h) 
 head(logs_23_24h_rows_human) 
 
-logs_124_24h_rows_human <- logs_MOK124_human %>% select(log_24h) 
-logs_124_48h_rows_human <- logs_MOK124_human %>% select(log_48h)  
-logs_124_72h_rows_human <- logs_MOK124_human %>% select(log_72h) 
-logs_124_168h_rows_human <- logs_MOK124_human %>% select(log_168h) 
+logs_124_24h_rows_human <- logs_MOK124_human %>% select(log2FoldChange_24h) 
+logs_124_48h_rows_human <- logs_MOK124_human %>% select(log2FoldChange_48h)  
+logs_124_72h_rows_human <- logs_MOK124_human %>% select(log2FoldChange_72h) 
+logs_124_168h_rows_human <- logs_MOK124_human %>% select(log2FoldChange_168h) 
 head(logs_124_168h_rows_human)
 
 # Plot various combinations of bovine KEGG pathways with pathview ##### 
+BiocManager::install("pathview")
 library("pathview") 
 detach(package:dplyr) 
 # Pathview saves a PNG within the project home directory automatically 
@@ -173,7 +175,7 @@ detach(package:dplyr)
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04064", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_NF-kB_2", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red2", cpd = "red"), 
@@ -181,17 +183,17 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04064", gene.idtype = 
 # I changed NAs to grey, because they were transparent/white, and it seems that genes that the genes that 
 # Then I changed it back to default and zeros to white - clearer image 
 # are NA on the list come up as grey (between 1 and -1) 
-sum(is.na(logs_MOK124$log_24h)) # 1690 
-sum(logs_MOK124$log_24h < 1, na.rm=TRUE) # 3646 
+sum(is.na(logs_MOK124$log2FoldChange_24h)) # 1690 
+sum(logs_MOK124$log2FoldChange_24h < 1, na.rm=TRUE) # 3646 
 nrow(logs_MOK124) #8889 
-sum(logs_MOK124$log_24h > 1, na.rm=TRUE) # 3553 
+sum(logs_MOK124$log2FoldChange_24h > 1, na.rm=TRUE) # 3553 
 3553 + 3646 + 1690 # 8889 
 
 # NF-Kb in MOK124 - log2 fold change from 8 to -8, PNG image  
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04064", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_NF-kB_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red2", cpd = "red"), 
@@ -201,7 +203,7 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04064", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04390", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_Hippo_2", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -210,7 +212,7 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04390", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04390", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_Hippo_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -219,7 +221,7 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04390", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04668", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_TNF_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -228,7 +230,7 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04668", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04668", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_TNF_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -237,7 +239,7 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04668", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04062", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_chemokine_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -246,7 +248,7 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04062", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04062", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_chemokine_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -255,7 +257,7 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04062", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04060", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_cytokine_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -264,7 +266,7 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04060", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04060", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_cytokine_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -274,7 +276,7 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04060", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04015", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_Rap1_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -285,7 +287,7 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04015", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04015", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_Rap1_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -294,7 +296,7 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04015", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04512", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_ECM_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -304,7 +306,7 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04512", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04512", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_ECM_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -313,7 +315,7 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04512", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04530", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_tight_junction_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -324,7 +326,7 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04530", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04530", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_tight_junction_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -335,7 +337,7 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04530", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04620", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK023_TLR_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red")) 
@@ -344,7 +346,7 @@ pv.out <- pathview(gene.data = logs_MOK023, pathway.id = "04620", gene.idtype = 
 pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04620", gene.idtype = "ENSEMBL", 
                    species = "bta", out.suffix = "MOK124_TLR_allHPI", keys.align = "y", 
                    kegg.native = T, match.data = F, multi.state = T, same.layer = F,
-                   key.pos = demo.paths$kpos2[i], sign.pos = demo.paths$spos[i], 
+                   key.pos = "topright", sign.pos = demo.paths$spos[i], 
                    limit = list(gene = 8, cpd = 8), bins = list(gene = 16, cpd = 16), 
                    low = list(gene = "blue", cpd = "blue"), mid = list(gene = "white", cpd = "white"), 
                    high = list(gene = "red3", cpd = "red"))
@@ -352,44 +354,44 @@ pv.out <- pathview(gene.data = logs_MOK124, pathway.id = "04620", gene.idtype = 
 # ** Check what are min and max log2foldchanges #####
 
 # MOK124 
-max(logs_MOK124$log_24h, na.rm = TRUE) # 9.793361 
-min(logs_MOK124$log_24h, na.rm = TRUE) # -5.356991
-sum(logs_MOK124$log_24h > 8, na.rm=TRUE) # 4 
+max(logs_MOK124$log2FoldChange_24h, na.rm = TRUE) # 9.793361 
+min(logs_MOK124$log2FoldChange_24h, na.rm = TRUE) # -5.356991
+sum(logs_MOK124$log2FoldChange_24h > 8, na.rm=TRUE) # 4 
 
-max(logs_MOK124$log_48h, na.rm = TRUE) #  8.90111 
-min(logs_MOK124$log_48h, na.rm = TRUE) # -9.897618
-sum(logs_MOK124$log_48h > 8, na.rm=TRUE) # 2 
-sum(logs_MOK124$log_48h < -8, na.rm=TRUE) # 20 
+max(logs_MOK124$log2FoldChange_48h, na.rm = TRUE) #  8.90111 
+min(logs_MOK124$log2FoldChange_48h, na.rm = TRUE) # -9.897618
+sum(logs_MOK124$log2FoldChange_48h > 8, na.rm=TRUE) # 2 
+sum(logs_MOK124$log2FoldChange_48h < -8, na.rm=TRUE) # 20 
 
-max(logs_MOK124$log_72h, na.rm = TRUE) # 8.817051
-min(logs_MOK124$log_72h, na.rm = TRUE) # -8.821492
-sum(logs_MOK124$log_72h > 8, na.rm=TRUE) # 3
-sum(logs_MOK124$log_72h < -8, na.rm=TRUE) # 7 
+max(logs_MOK124$log2FoldChange_72h, na.rm = TRUE) # 8.817051
+min(logs_MOK124$log2FoldChange_72h, na.rm = TRUE) # -8.821492
+sum(logs_MOK124$log2FoldChange_72h > 8, na.rm=TRUE) # 3
+sum(logs_MOK124$log2FoldChange_72h < -8, na.rm=TRUE) # 7 
 
-max(logs_MOK124$log_168h, na.rm = TRUE) # 11.42208
-min(logs_MOK124$log_168h, na.rm = TRUE) # -9.22833
-sum(logs_MOK124$log_168h > 8, na.rm=TRUE) # 3 
-sum(logs_MOK124$log_168h < -8, na.rm=TRUE) # 9 
+max(logs_MOK124$log2FoldChange_168h, na.rm = TRUE) # 11.42208
+min(logs_MOK124$log2FoldChange_168h, na.rm = TRUE) # -9.22833
+sum(logs_MOK124$log2FoldChange_168h > 8, na.rm=TRUE) # 3 
+sum(logs_MOK124$log2FoldChange_168h < -8, na.rm=TRUE) # 9 
 
 # MOK023 
-max(logs_MOK023$log_24h, na.rm = TRUE) # 9.038831
-min(logs_MOK023$log_24h, na.rm = TRUE) # -6.530827
-sum(logs_MOK023$log_24h > 8, na.rm=TRUE) # 4 
+max(logs_MOK023$log2FoldChange_24h, na.rm = TRUE) # 9.038831
+min(logs_MOK023$log2FoldChange_24h, na.rm = TRUE) # -4.660612 
+sum(logs_MOK023$log2FoldChange_24h > 8, na.rm=TRUE) # 4 
 
-max(logs_MOK023$log_48h, na.rm = TRUE) #  8.509834
-min(logs_MOK023$log_48h, na.rm = TRUE) # -6.692438
-sum(logs_MOK023$log_48h > 8, na.rm=TRUE) # 3
-sum(logs_MOK023$log_48h < -8, na.rm=TRUE) # 0 
+max(logs_MOK023$log2FoldChange_48h, na.rm = TRUE) #  8.509834
+min(logs_MOK023$log2FoldChange_48h, na.rm = TRUE) # -6.312661
+sum(logs_MOK023$log2FoldChange_48h > 8, na.rm=TRUE) # 3
+sum(logs_MOK023$log2FoldChange_48h < -8, na.rm=TRUE) # 0 
 
-max(logs_MOK023$log_72h, na.rm = TRUE) # 7.448415
-min(logs_MOK023$log_72h, na.rm = TRUE) # -7.32069
-sum(logs_MOK023$log_72h > 8, na.rm=TRUE) # 0
-sum(logs_MOK023$log_72h < -8, na.rm=TRUE) # 0
+max(logs_MOK023$log2FoldChange_72h, na.rm = TRUE) # 7.348916
+min(logs_MOK023$log2FoldChange_72h, na.rm = TRUE) # -7.32069
+sum(logs_MOK023$log2FoldChange_72h > 8, na.rm=TRUE) # 0
+sum(logs_MOK023$log2FoldChange_72h < -8, na.rm=TRUE) # 0
 
-max(logs_MOK023$log_168h, na.rm = TRUE) # 7.634158
-min(logs_MOK023$log_168h, na.rm = TRUE) # -8.984974
-sum(logs_MOK023$log_168h > 8, na.rm=TRUE) # 0 
-sum(logs_MOK023$log_168h < -8, na.rm=TRUE) # 1  
+max(logs_MOK023$log2FoldChange_168h, na.rm = TRUE) # 7.634158
+min(logs_MOK023$log2FoldChange_168h, na.rm = TRUE) # -8.984974
+sum(logs_MOK023$log2FoldChange_168h > 8, na.rm=TRUE) # 0 
+sum(logs_MOK023$log2FoldChange_168h < -8, na.rm=TRUE) # 1  
 # Way less of them in MOK023, but not too many over 8 or < -8, potentially it is ok to leave it as is in pathview. 
 
 
