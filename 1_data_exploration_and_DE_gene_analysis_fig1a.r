@@ -86,7 +86,7 @@ myPCA
 ggsave("myPCA.jpeg") 
 
 # PCA and NF-kB normalised genes combined plot # 
-# Normalised NF-kB plots are in code file 7_Plot_epithelial_cell_markers.r 
+# Normalised NF-kB plots are in code file 9_Plot_epithelial_cell_markers.r 
 
 library(ggpubr)
 
